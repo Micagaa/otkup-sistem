@@ -1,0 +1,35 @@
+models:
+  Dobavljac:
+    naziv: string
+    pib: string nullable
+    mesto: string nullable
+    telefon: string nullable
+    email: string nullable
+    timestamps: true
+
+  Otkup:
+    dobavljac_id: id foreign:Dobavljac
+    vrsta_ploda: string
+    kolicina_kg: decimal:8,2
+    cena_po_kg: decimal:10,2
+    datum_otkupa: date
+    status_isplate: enum:na_cekanju,isplaceno default:na_cekanju
+    timestamps: true
+
+  SerijaPrerade:
+    otkup_id: id foreign:Otkup
+    faza: enum:ciscenje,sortiranje,susenje,hladjenje,pakovanje default:ciscenje
+    status_kvaliteta: enum:na_kontroli,ispravno,neispravno default:na_kontroli
+    napomena_kvaliteta: text nullable
+    datum_pocetka: date nullable
+    datum_zavrsetka: date nullable
+    timestamps: true
+
+  Zaliha:
+    serija_prerade_id: id foreign:SerijaPrerade
+    vrsta_proizvoda: string
+    kolicina_kg: decimal:8,2
+    rok_upotrebe: date nullable
+    pozicija: string nullable
+    datum_prijema: date
+    timestamps: true
