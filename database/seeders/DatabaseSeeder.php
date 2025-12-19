@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,10 +21,11 @@ class DatabaseSeeder extends Seeder
             ZalihaSeeder::class,
         ]);
 
-        // Seed test user (for Breeze login)
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Admin user (known credentials)
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@smrcak.rs',
+            'password' => Hash::make('admin123'),
         ]);
     }
 }

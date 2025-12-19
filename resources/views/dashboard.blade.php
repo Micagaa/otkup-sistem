@@ -1,17 +1,54 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.admin', ['title' => 'Dashboard'])
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
+@section('content')
+<div class="row g-3">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="mb-1">Dobrodošao u Smrčak DOO sistem</h4>
+                <p class="text-muted mb-0">Otkup i prerada šumskih plodova – interna aplikacija za zaposlene.</p>
             </div>
         </div>
     </div>
-</x-app-layout>
+
+    <div class="col-12 col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="small text-muted">Dobavljači</div>
+                <div class="fs-4 fw-semibold">{{ \App\Models\Dobavljac::count() }}</div>
+                <a class="btn btn-sm btn-outline-success mt-2" href="{{ route('dobavljaci.index') }}">Otvori</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="small text-muted">Otkupi</div>
+                <div class="fs-4 fw-semibold">{{ \App\Models\Otkup::count() }}</div>
+                <a class="btn btn-sm btn-outline-success mt-2" href="{{ route('otkupi.index') }}">Otvori</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="small text-muted">Serije prerade</div>
+                <div class="fs-4 fw-semibold">{{ \App\Models\SerijaPrerade::count() }}</div>
+                <a class="btn btn-sm btn-outline-success mt-2" href="{{ route('serije.index') }}">Otvori</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="small text-muted">Zalihe</div>
+                <div class="fs-4 fw-semibold">{{ \App\Models\Zaliha::count() }}</div>
+                <a class="btn btn-sm btn-outline-success mt-2" href="{{ route('zalihe.index') }}">Otvori</a>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
