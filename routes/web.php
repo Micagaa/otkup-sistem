@@ -22,9 +22,18 @@ Route::middleware('auth')->group(function () {
     Route::resource('dobavljaci', \App\Http\Controllers\DobavljacController::class)
     ->parameters(['dobavljaci' => 'dobavljac']);
 
-    Route::resource('otkupi', \App\Http\Controllers\OtkupController::class);
-    Route::resource('serije', \App\Http\Controllers\SerijaPreradeController::class);
-    Route::resource('zalihe', \App\Http\Controllers\ZalihaController::class);
+    //Route::resource('otkupi', \App\Http\Controllers\OtkupController::class);
+    Route::resource('otkupi', \App\Http\Controllers\OtkupController::class)
+    ->parameters(['otkupi' => 'otkup']);
+
+     // Route::resource('serije', \App\Http\Controllers\SerijaPreradeController::class);
+     Route::resource('serije', \App\Http\Controllers\SerijaPreradeController::class)
+    ->parameters(['serije' => 'serija']);
+
+    //Route::resource('zalihe', \App\Http\Controllers\ZalihaController::class);
+    Route::resource('zalihe', \App\Http\Controllers\ZalihaController::class)
+    ->parameters(['zalihe' => 'zaliha']);
+
 
 });
 
