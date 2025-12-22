@@ -29,6 +29,9 @@
                 <a class="list-group-item list-group-item-action" href="{{ route('dobavljaci.index') }}">Dobavljači</a>
                 <a class="list-group-item list-group-item-action" href="{{ route('otkupi.index') }}">Otkupi</a>
                 <a class="list-group-item list-group-item-action" href="{{ route('serije.index') }}">Serije prerade</a>
+                <a href="{{ route('qc.index') }}" class="list-group-item">
+                    Kontrola kvaliteta
+                </a>
                 <a class="list-group-item list-group-item-action" href="{{ route('zalihe.index') }}">Zalihe</a>
             </div>
         </aside>

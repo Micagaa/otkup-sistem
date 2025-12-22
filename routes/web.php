@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KontrolaKvalitetaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,6 +34,10 @@ Route::middleware('auth')->group(function () {
     //Route::resource('zalihe', \App\Http\Controllers\ZalihaController::class);
     Route::resource('zalihe', \App\Http\Controllers\ZalihaController::class)
     ->parameters(['zalihe' => 'zaliha']);
+
+    Route::get('/kontrola-kvaliteta', [KontrolaKvalitetaController::class, 'index'])->name('qc.index');
+    Route::get('/kontrola-kvaliteta/{serija}/edit', [KontrolaKvalitetaController::class, 'edit'])->name('qc.edit');
+    Route::put('/kontrola-kvaliteta/{serija}', [KontrolaKvalitetaController::class, 'update'])->name('qc.update');
 
 
 });

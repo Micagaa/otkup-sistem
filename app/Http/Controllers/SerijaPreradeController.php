@@ -16,10 +16,14 @@ class SerijaPreradeController extends Controller
 
         if ($request->filled('search')) {
             $s = $request->string('search')->toString();
-            $q->whereHas('otkup', function ($qq) use ($s) {
-                $qq->where('vrsta_ploda', 'like', "%{$s}%");
-            })->orWhere('status_kvaliteta', 'like', "%{$s}%")
-              ->orWhere('faza', 'like', "%{$s}%");
+
+            $q->where(function ($qq) use ($s) {
+                $qq->whereHas('otkup', function ($q2) use ($s) {
+                    $q2->where('vrsta_ploda', 'like', "%{$s}%");
+                })
+                ->orWhere('status_kvaliteta', 'like', "%{$s}%")
+                ->orWhere('faza', 'like', "%{$s}%");
+            });
         }
 
         if ($request->filled('faza')) {
@@ -45,25 +49,26 @@ class SerijaPreradeController extends Controller
     {
         $otkupi = Otkup::query()->orderByDesc('datum_otkupa')->get();
         $faze = ['ciscenje', 'sušenje', 'sortiranje', 'pakovanje'];
-        $statusi = ['na_kontroli', 'ispravno', 'neispravno'];
 
-        return view('serije.create', compact('otkupi', 'faze', 'statusi'));
+        return view('serije.create', compact('otkupi', 'faze'));
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
-            'otkup_id'           => ['required', 'exists:otkups,id'],
-            'faza'               => ['required', 'string', 'max:255'],
-            'status_kvaliteta'   => ['required', 'string', 'max:255'],
-            'napomena_kvaliteta' => ['nullable', 'string'],
-            'datum_pocetka'      => ['required', 'date'],
-            'datum_zavrsetka'    => ['nullable', 'date', 'after_or_equal:datum_pocetka'],
+            'otkup_id'        => ['required', 'exists:otkups,id'],
+            'faza'            => ['required', 'string', 'max:255'],
+            'datum_pocetka'   => ['required', 'date'],
+            'datum_zavrsetka' => ['nullable', 'date', 'after_or_equal:datum_pocetka'],
         ]);
+
+        // QC polja se NE unose iz prerade – automatski idu na kontrolu
+        $data['status_kvaliteta'] = 'na_kontroli';
+        $data['napomena_kvaliteta'] = null;
 
         SerijaPrerade::create($data);
 
-        return redirect()->route('serije.index')->with('success', 'Prerada uspešno evidentirana.');
+        return redirect()->route('serije.index')->with('success', 'Prerada uspešno evidentirana (status: na_kontroli).');
     }
 
     public function show(SerijaPrerade $serija)
@@ -76,22 +81,20 @@ class SerijaPreradeController extends Controller
     {
         $otkupi = Otkup::query()->orderByDesc('datum_otkupa')->get();
         $faze = ['ciscenje', 'sušenje', 'sortiranje', 'pakovanje'];
-        $statusi = ['na_kontroli', 'ispravno', 'neispravno'];
 
-        return view('serije.edit', compact('serija', 'otkupi', 'faze', 'statusi'));
+        return view('serije.edit', compact('serija', 'otkupi', 'faze'));
     }
 
     public function update(Request $request, SerijaPrerade $serija)
     {
         $data = $request->validate([
-            'otkup_id'           => ['required', 'exists:otkups,id'],
-            'faza'               => ['required', 'string', 'max:255'],
-            'status_kvaliteta'   => ['required', 'string', 'max:255'],
-            'napomena_kvaliteta' => ['nullable', 'string'],
-            'datum_pocetka'      => ['required', 'date'],
-            'datum_zavrsetka'    => ['nullable', 'date', 'after_or_equal:datum_pocetka'],
+            'otkup_id'        => ['required', 'exists:otkups,id'],
+            'faza'            => ['required', 'string', 'max:255'],
+            'datum_pocetka'   => ['required', 'date'],
+            'datum_zavrsetka' => ['nullable', 'date', 'after_or_equal:datum_pocetka'],
         ]);
 
+        // Namerno NE diramo status_kvaliteta i napomena_kvaliteta
         $serija->update($data);
 
         return redirect()->route('serije.index')->with('success', 'Prerada uspešno izmenjena.');

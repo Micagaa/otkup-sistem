@@ -50,5 +50,20 @@
             </div>
         </div>
     </div>
+
+    <div class="col-12 col-md-3">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="small text-muted">Kontrola kvaliteta</div>
+            <div class="fs-4 fw-semibold">
+                {{ \App\Models\SerijaPrerade::where('status_kvaliteta','na_kontroli')->count() }}
+            </div>
+            <a class="btn btn-sm btn-outline-success mt-2" href="{{ route('qc.index') }}">Otvori</a>
+        </div>
+     </div>
+  </div>
+
+
+  
 </div>
 @endsection

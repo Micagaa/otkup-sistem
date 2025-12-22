@@ -13,7 +13,7 @@
     <div class="card-body">
         <form method="POST" action="{{ route('serije.store') }}" class="mx-auto" style="max-width: 760px;">
             @csrf
-            @include('serije.partials.form', ['serija' => null, 'otkupi' => $otkupi, 'faze' => $faze, 'statusi' => $statusi])
+            @include('serije.partials.form', ['serija' => null, 'otkupi' => $otkupi, 'faze' => $faze])
 
             <div class="d-flex gap-2 justify-content-center mt-3">
                 <button class="btn btn-success px-5">Sačuvaj</button>
