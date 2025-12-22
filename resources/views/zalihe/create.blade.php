@@ -8,7 +8,6 @@
             <span style="font-size:20px;">🌲</span>
             <h5 class="mb-0">Smrčak DOO Ivanjica</h5>
         </div>
-        <a href="{{ route('zalihe.index') }}" class="text-decoration-none">Nazad</a>
     </div>
 
     <div class="text-center mb-4">
@@ -21,6 +20,7 @@
 
             <form method="POST" action="{{ route('zalihe.store') }}">
                 @csrf
+
                 @include('zalihe.partials.form', ['zaliha' => null, 'serije' => $serije])
 
                 <div class="d-flex gap-2 justify-content-center mt-4">
@@ -33,4 +33,31 @@
     </div>
 
 </div>
+
+{{-- AUTO POPUNA: kad izabereš seriju, popuni vrstu proizvoda i količinu --}}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const sel = document.getElementById('serija_prerade_id');
+    const vrsta = document.getElementById('vrsta_proizvoda');
+    const kolicina = document.getElementById('kolicina_kg');
+
+    if (!sel) return;
+
+    function applySelected(overwrite = false) {
+        const opt = sel.options[sel.selectedIndex];
+        if (!opt || !opt.value) return;
+
+        const v = opt.dataset.vrsta || '';
+        const k = opt.dataset.kolicina || '';
+
+        if (vrsta && (overwrite || !vrsta.value)) vrsta.value = v;
+        if (kolicina && (overwrite || !kolicina.value)) kolicina.value = k;
+    }
+
+    sel.addEventListener('change', () => applySelected(true));
+
+    // ako je već selektovano (npr. posle validacije), popuni
+    applySelected(false);
+});
+</script>
 @endsection

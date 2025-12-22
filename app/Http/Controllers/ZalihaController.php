@@ -26,7 +26,11 @@ class ZalihaController extends Controller
 
     public function create()
     {
-        $serije = SerijaPrerade::query()->latest()->get();
+        $serije = \App\Models\SerijaPrerade::query()
+            ->with('otkup')              // da imamo vrsta_ploda, kolicina, itd.
+            ->orderByDesc('id')
+            ->get();
+
         return view('zalihe.create', compact('serije'));
     }
 
