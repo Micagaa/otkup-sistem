@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('serija_prerades', function (Blueprint $table) {
             $table->id();
             $table->foreignId('otkup_id')->constrained();
-            $table->enum('faza', ["ciscenje","sortiranje","susenje","hladjenje","pakovanje"])->default('ciscenje');
-            $table->enum('status_kvaliteta', ["na_kontroli","ispravno","neispravno"])->default('na_kontroli');
+            $table->enum('faza', ['ciscenje', 'sortiranje', 'susenje', 'hladjenje', 'pakovanje'])->default('ciscenje');
+            $table->enum('status_kvaliteta', ['na_kontroli', 'ispravno', 'neispravno'])->default('na_kontroli');
             $table->text('napomena_kvaliteta')->nullable();
             $table->date('datum_pocetka')->nullable();
             $table->date('datum_zavrsetka')->nullable();

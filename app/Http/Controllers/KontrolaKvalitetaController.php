@@ -14,7 +14,7 @@ class KontrolaKvalitetaController extends Controller
             ->orderByDesc('datum_pocetka');
 
         // default: prikazi prvo "na_kontroli"
-        if (!$request->filled('status')) {
+        if (! $request->filled('status')) {
             $q->where('status_kvaliteta', 'na_kontroli');
         } else {
             $q->where('status_kvaliteta', $request->status);
@@ -24,8 +24,8 @@ class KontrolaKvalitetaController extends Controller
             $s = $request->string('search')->toString();
             $q->where(function ($qq) use ($s) {
                 $qq->where('id', $s)
-                   ->orWhereHas('otkup', fn($q2) => $q2->where('vrsta_ploda', 'like', "%{$s}%"))
-                   ->orWhere('faza', 'like', "%{$s}%");
+                    ->orWhereHas('otkup', fn ($q2) => $q2->where('vrsta_ploda', 'like', "%{$s}%"))
+                    ->orWhere('faza', 'like', "%{$s}%");
             });
         }
 
@@ -38,13 +38,14 @@ class KontrolaKvalitetaController extends Controller
     public function edit(SerijaPrerade $serija)
     {
         $serija->load('otkup');
+
         return view('qc.edit', compact('serija'));
     }
 
     public function update(Request $request, SerijaPrerade $serija)
     {
         $data = $request->validate([
-            'status_kvaliteta'   => ['required', 'in:ispravno,neispravno'],
+            'status_kvaliteta' => ['required', 'in:ispravno,neispravno'],
             'napomena_kvaliteta' => ['nullable', 'string', 'max:2000'],
         ]);
 

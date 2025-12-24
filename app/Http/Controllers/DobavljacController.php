@@ -10,6 +10,7 @@ class DobavljacController extends Controller
     public function index()
     {
         $dobavljaci = Dobavljac::orderBy('naziv')->paginate(10);
+
         return view('dobavljaci.index', compact('dobavljaci'));
     }
 
@@ -21,11 +22,11 @@ class DobavljacController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'naziv'   => ['required', 'string', 'max:255'],
-            'pib'     => ['nullable', 'string', 'max:50'],
-            'mesto'   => ['nullable', 'string', 'max:255'],
+            'naziv' => ['required', 'string', 'max:255'],
+            'pib' => ['nullable', 'string', 'max:50'],
+            'mesto' => ['nullable', 'string', 'max:255'],
             'telefon' => ['nullable', 'string', 'max:50'],
-            'email'   => ['nullable', 'email', 'max:255'],
+            'email' => ['nullable', 'email', 'max:255'],
         ]);
 
         Dobavljac::create($data);
@@ -48,11 +49,11 @@ class DobavljacController extends Controller
     public function update(Request $request, Dobavljac $dobavljac)
     {
         $data = $request->validate([
-            'naziv'   => ['required', 'string', 'max:255'],
-            'pib'     => ['nullable', 'string', 'max:50'],
-            'mesto'   => ['nullable', 'string', 'max:255'],
+            'naziv' => ['required', 'string', 'max:255'],
+            'pib' => ['nullable', 'string', 'max:50'],
+            'mesto' => ['nullable', 'string', 'max:255'],
             'telefon' => ['nullable', 'string', 'max:50'],
-            'email'   => ['nullable', 'email', 'max:255'],
+            'email' => ['nullable', 'email', 'max:255'],
         ]);
 
         $dobavljac->update($data);

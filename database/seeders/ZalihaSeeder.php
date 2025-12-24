@@ -2,16 +2,18 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\Zaliha;
 use App\Models\SerijaPrerade;
+use App\Models\Zaliha;
+use Illuminate\Database\Seeder;
 
 class ZalihaSeeder extends Seeder
 {
     public function run(): void
     {
         $serija = SerijaPrerade::first();
-        if (!$serija) return;
+        if (! $serija) {
+            return;
+        }
 
         Zaliha::create([
             'serija_prerade_id' => $serija->id,

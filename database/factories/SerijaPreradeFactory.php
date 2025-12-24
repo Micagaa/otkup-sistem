@@ -14,8 +14,8 @@ class SerijaPreradeFactory extends Factory
     {
         return [
             'otkup_id' => Otkup::factory(),
-            'faza' => fake()->randomElement(["ciscenje","sortiranje","susenje","hladjenje","pakovanje"]),
-            'status_kvaliteta' => fake()->randomElement(["na_kontroli","ispravno","neispravno"]),
+            'faza' => fake()->randomElement(['ciscenje', 'sortiranje', 'susenje', 'hladjenje', 'pakovanje']),
+            'status_kvaliteta' => fake()->randomElement(['na_kontroli', 'ispravno', 'neispravno']),
             'napomena_kvaliteta' => fake()->text(),
             'datum_pocetka' => fake()->date(),
             'datum_zavrsetka' => fake()->date(),

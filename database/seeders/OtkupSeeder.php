@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\Otkup;
 use App\Models\Dobavljac;
+use App\Models\Otkup;
+use Illuminate\Database\Seeder;
 
 class OtkupSeeder extends Seeder
 {

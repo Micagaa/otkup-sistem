@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('kolicina_kg', 8, 2);
             $table->decimal('cena_po_kg', 10, 2);
             $table->date('datum_otkupa');
-            $table->enum('status_isplate', ["na_cekanju","isplaceno"])->default('na_cekanju');
+            $table->enum('status_isplate', ['na_cekanju', 'isplaceno'])->default('na_cekanju');
             $table->timestamps();
         });
 

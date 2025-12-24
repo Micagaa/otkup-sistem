@@ -21,8 +21,8 @@ class SerijaPreradeController extends Controller
                 $qq->whereHas('otkup', function ($q2) use ($s) {
                     $q2->where('vrsta_ploda', 'like', "%{$s}%");
                 })
-                ->orWhere('status_kvaliteta', 'like', "%{$s}%")
-                ->orWhere('faza', 'like', "%{$s}%");
+                    ->orWhere('status_kvaliteta', 'like', "%{$s}%")
+                    ->orWhere('faza', 'like', "%{$s}%");
             });
         }
 
@@ -56,9 +56,9 @@ class SerijaPreradeController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'otkup_id'        => ['required', 'exists:otkups,id'],
-            'faza'            => ['required', 'string', 'max:255'],
-            'datum_pocetka'   => ['required', 'date'],
+            'otkup_id' => ['required', 'exists:otkups,id'],
+            'faza' => ['required', 'string', 'max:255'],
+            'datum_pocetka' => ['required', 'date'],
             'datum_zavrsetka' => ['nullable', 'date', 'after_or_equal:datum_pocetka'],
         ]);
 
@@ -74,6 +74,7 @@ class SerijaPreradeController extends Controller
     public function show(SerijaPrerade $serija)
     {
         $serija->load('otkup');
+
         return view('serije.show', compact('serija'));
     }
 
@@ -88,9 +89,9 @@ class SerijaPreradeController extends Controller
     public function update(Request $request, SerijaPrerade $serija)
     {
         $data = $request->validate([
-            'otkup_id'        => ['required', 'exists:otkups,id'],
-            'faza'            => ['required', 'string', 'max:255'],
-            'datum_pocetka'   => ['required', 'date'],
+            'otkup_id' => ['required', 'exists:otkups,id'],
+            'faza' => ['required', 'string', 'max:255'],
+            'datum_pocetka' => ['required', 'date'],
             'datum_zavrsetka' => ['nullable', 'date', 'after_or_equal:datum_pocetka'],
         ]);
 
@@ -103,6 +104,7 @@ class SerijaPreradeController extends Controller
     public function destroy(SerijaPrerade $serija)
     {
         $serija->delete();
+
         return redirect()->route('serije.index')->with('success', 'Prerada obrisana.');
     }
 }

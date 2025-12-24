@@ -17,7 +17,7 @@ class OtkupController extends Controller
             $search = $request->string('search')->toString();
             $q->whereHas('dobavljac', function ($qq) use ($search) {
                 $qq->where('naziv', 'like', "%{$search}%")
-                   ->orWhere('pib', 'like', "%{$search}%");
+                    ->orWhere('pib', 'like', "%{$search}%");
             });
         }
 
@@ -44,18 +44,19 @@ class OtkupController extends Controller
     public function create()
     {
         $dobavljaci = Dobavljac::orderBy('naziv')->get();
+
         return view('otkupi.create', compact('dobavljaci'));
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
-            'dobavljac_id'  => ['required', 'exists:dobavljacs,id'],
-            'vrsta_ploda'   => ['required', 'string', 'max:255'],
-            'kolicina_kg'   => ['required', 'numeric', 'min:0.01'],
-            'cena_po_kg'    => ['required', 'numeric', 'min:0.01'],
-            'datum_otkupa'  => ['required', 'date'],
-            'status_isplate'=> ['required', 'in:na_cekanju,isplaceno'],
+            'dobavljac_id' => ['required', 'exists:dobavljacs,id'],
+            'vrsta_ploda' => ['required', 'string', 'max:255'],
+            'kolicina_kg' => ['required', 'numeric', 'min:0.01'],
+            'cena_po_kg' => ['required', 'numeric', 'min:0.01'],
+            'datum_otkupa' => ['required', 'date'],
+            'status_isplate' => ['required', 'in:na_cekanju,isplaceno'],
         ]);
 
         Otkup::create($data);
@@ -67,7 +68,7 @@ class OtkupController extends Controller
     {
         $otkup->load('dobavljac');
 
-        $vrednost = (float)$otkup->kolicina_kg * (float)$otkup->cena_po_kg;
+        $vrednost = (float) $otkup->kolicina_kg * (float) $otkup->cena_po_kg;
 
         return view('otkupi.show', compact('otkup', 'vrednost'));
     }
@@ -75,18 +76,19 @@ class OtkupController extends Controller
     public function edit(Otkup $otkup)
     {
         $dobavljaci = Dobavljac::orderBy('naziv')->get();
+
         return view('otkupi.edit', compact('otkup', 'dobavljaci'));
     }
 
     public function update(Request $request, Otkup $otkup)
     {
         $data = $request->validate([
-            'dobavljac_id'  => ['required', 'exists:dobavljacs,id'],
-            'vrsta_ploda'   => ['required', 'string', 'max:255'],
-            'kolicina_kg'   => ['required', 'numeric', 'min:0.01'],
-            'cena_po_kg'    => ['required', 'numeric', 'min:0.01'],
-            'datum_otkupa'  => ['required', 'date'],
-            'status_isplate'=> ['required', 'in:na_cekanju,isplaceno'],
+            'dobavljac_id' => ['required', 'exists:dobavljacs,id'],
+            'vrsta_ploda' => ['required', 'string', 'max:255'],
+            'kolicina_kg' => ['required', 'numeric', 'min:0.01'],
+            'cena_po_kg' => ['required', 'numeric', 'min:0.01'],
+            'datum_otkupa' => ['required', 'date'],
+            'status_isplate' => ['required', 'in:na_cekanju,isplaceno'],
         ]);
 
         $otkup->update($data);
@@ -97,6 +99,7 @@ class OtkupController extends Controller
     public function destroy(Otkup $otkup)
     {
         $otkup->delete();
+
         return redirect()->route('otkupi.index')->with('success', 'Otkup obrisan.');
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Zaliha;
 use App\Models\SerijaPrerade;
+use App\Models\Zaliha;
 use Illuminate\Http\Request;
 
 class ZalihaController extends Controller
@@ -38,11 +38,11 @@ class ZalihaController extends Controller
     {
         $data = $request->validate([
             'serija_prerade_id' => ['nullable', 'integer', 'exists:serija_prerades,id'],
-            'vrsta_proizvoda'   => ['required', 'string', 'max:255'],
-            'kolicina_kg'       => ['required', 'numeric', 'min:0'],
-            'datum_prijema'     => ['nullable', 'date'],
-            'rok_upotrebe'      => ['nullable', 'date'],
-            'pozicija'          => ['nullable', 'string', 'max:100'],
+            'vrsta_proizvoda' => ['required', 'string', 'max:255'],
+            'kolicina_kg' => ['required', 'numeric', 'min:0'],
+            'datum_prijema' => ['nullable', 'date'],
+            'rok_upotrebe' => ['nullable', 'date'],
+            'pozicija' => ['nullable', 'string', 'max:100'],
         ]);
 
         Zaliha::create($data);
@@ -53,12 +53,14 @@ class ZalihaController extends Controller
     public function show(Zaliha $zaliha)
     {
         $zaliha->load('serijaPrerade');
+
         return view('zalihe.show', compact('zaliha'));
     }
 
     public function edit(Zaliha $zaliha)
     {
         $serije = SerijaPrerade::query()->latest()->get();
+
         return view('zalihe.edit', compact('zaliha', 'serije'));
     }
 
@@ -66,11 +68,11 @@ class ZalihaController extends Controller
     {
         $data = $request->validate([
             'serija_prerade_id' => ['nullable', 'integer', 'exists:serija_prerades,id'],
-            'vrsta_proizvoda'   => ['required', 'string', 'max:255'],
-            'kolicina_kg'       => ['required', 'numeric', 'min:0'],
-            'datum_prijema'     => ['nullable', 'date'],
-            'rok_upotrebe'      => ['nullable', 'date'],
-            'pozicija'          => ['nullable', 'string', 'max:100'],
+            'vrsta_proizvoda' => ['required', 'string', 'max:255'],
+            'kolicina_kg' => ['required', 'numeric', 'min:0'],
+            'datum_prijema' => ['nullable', 'date'],
+            'rok_upotrebe' => ['nullable', 'date'],
+            'pozicija' => ['nullable', 'string', 'max:100'],
         ]);
 
         $zaliha->update($data);
@@ -81,6 +83,7 @@ class ZalihaController extends Controller
     public function destroy(Zaliha $zaliha)
     {
         $zaliha->delete();
+
         return redirect()->route('zalihe.index')->with('success', 'Zaliha obrisana.');
     }
 }

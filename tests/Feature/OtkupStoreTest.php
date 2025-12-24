@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Dobavljac;
-use App\Models\Otkup;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\SerijaPrerade;
 use App\Models\Otkup;
+use App\Models\SerijaPrerade;
+use Illuminate\Database\Seeder;
 
 class SerijaPreradeSeeder extends Seeder
 {

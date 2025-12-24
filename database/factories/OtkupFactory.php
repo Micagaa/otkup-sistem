@@ -18,7 +18,7 @@ class OtkupFactory extends Factory
             'kolicina_kg' => fake()->randomFloat(2, 0, 999999.99),
             'cena_po_kg' => fake()->randomFloat(2, 0, 99999999.99),
             'datum_otkupa' => fake()->date(),
-            'status_isplate' => fake()->randomElement(["na_cekanju","isplaceno"]),
+            'status_isplate' => fake()->randomElement(['na_cekanju', 'isplaceno']),
         ];
     }
 }
