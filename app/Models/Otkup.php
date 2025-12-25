@@ -44,4 +44,9 @@ class Otkup extends Model
     {
         return $this->belongsTo(Dobavljac::class);
     }
+
+    public function getUkupnaVrednostAttribute(): float
+    {
+        return (float) $this->kolicina_kg * (float) $this->cena_po_kg;
+    }
 }

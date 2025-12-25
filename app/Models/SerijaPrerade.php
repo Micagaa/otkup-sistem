@@ -43,4 +43,14 @@ class SerijaPrerade extends Model
     {
         return $this->belongsTo(Otkup::class);
     }
+    
+    public function isQualityApproved(): bool
+    {
+        return $this->status_kvaliteta === 'ispravno';
+    }
+
+    public function isQualityRejected(): bool
+    {
+        return $this->status_kvaliteta === 'neispravno';
+    }
 }
